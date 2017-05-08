@@ -6,8 +6,25 @@ layout: default
   {% for app in site.apps %}
     <li>
       <!--a class="icon" href="{{ app.url }}" style="background:url('/assets/apps{{ app.url }}icon.jpg')">&nbsp</a-->
-      <a href="{{ app.install_url }}"><h2>{{ app.title }}</h2></a>
+      <h2>{{ app.title }}</h2>
+      <a href="{{ app.install_url }}" class="install">Install</a>
       <p>{{ app.content }}</p>
     </li>
   {% endfor %}
 </ul>
+<script>
+
+var installClick = function(e){
+  var url = e.target.href;
+  parent.postMessage({install: url}, "*");
+  e.preventDefault();
+  return false;
+}
+
+var installLinks = document.querySelectorAll('a.install');
+
+for(var i=0; i<installLinks.length; i++){
+  installLinks[i].addEventListener('click', installClick);
+}
+
+</script>
