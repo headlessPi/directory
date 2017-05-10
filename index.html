@@ -5,9 +5,8 @@ layout: default
 <ul class="apps">
   {% for app in site.apps %}
     <li>
-      <!--a class="icon" href="{{ app.url }}" style="background:url('/assets/apps{{ app.url }}icon.jpg')">&nbsp</a-->
+      <button href="{{ app.install_url }}" class="install">Install</button>
       <h2>{{ app.title }}</h2>
-      <a href="{{ app.install_url }}" class="install">Install</a>
       <p>{{ app.content }}</p>
     </li>
   {% endfor %}
@@ -21,7 +20,7 @@ var installClick = function(e){
   return false;
 }
 
-var installLinks = document.querySelectorAll('a.install');
+var installLinks = document.querySelectorAll('button.install');
 
 for(var i=0; i<installLinks.length; i++){
   installLinks[i].addEventListener('click', installClick);
