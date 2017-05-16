@@ -1,24 +1,45 @@
 ---
 layout: default
 ---
-
+<div id="message"></div>
 <ul class="apps">
   {% for app in site.apps %}
     <li>
-      <button href="{{ app.install_url }}" class="install">Install</button>
+      <button data-url="{{ app.install_url }}" class="install">Install</button>
       <h2>{{ app.title }}</h2>
       <p>{{ app.content }}</p>
     </li>
   {% endfor %}
 </ul>
 <script>
+var id = 1;
+var clickTrack = {};
 
 var installClick = function(e){
-  var url = e.target.href;
-  parent.postMessage({install: url}, "*");
+  var url = e.target.getAttribute('data-url');
+  e.target.disabled = true;
+  e.target.innerHTML = "Installing...";
+  parent.postMessage({install: url, id: id}, "*");
+  clickTrack[id] = e.target;
   e.preventDefault();
   return false;
 }
+
+var handleMessage = function(e){
+  if(e.data.id && clickTrack[e.data.id]){
+    var el = clickTrack[e.data.id];
+    if(e.data.err){
+      document.getElementById('message').innerHTML = e.data.err;
+      el.innerHTML = "Install";
+      e.target.disabled = false;
+    }else{
+      el.innerHTML = "Installed";
+    }
+    delete clickTrack[e.data.id];
+  }
+}
+
+window.addEventListener('message', handleMessage);
 
 var installLinks = document.querySelectorAll('button.install');
 
