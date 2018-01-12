@@ -4,7 +4,8 @@ collections:
     output: false
 markdown: kramdown
 gems:
-  - jekyll-feed
 exclude:
   - Gemfile
   - Gemfile.lock
+  - LICENSE
+  - README.md

@@ -5,7 +5,7 @@ layout: default
 <ul class="apps">
   {% for app in site.apps %}
     <li>
-      <button data-url="{{ app.install_url }}" class="install">Install</button>
+      <button data-url="{{ app.install_url }}" data-package="{{ app.install_package }}" class="install">Install</button>
       <h2>{{ app.title }}</h2>
       <p>{{ app.content }}</p>
     </li>
